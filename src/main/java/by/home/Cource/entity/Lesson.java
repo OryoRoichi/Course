@@ -21,6 +21,7 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    String name;
     String description;
     @OneToMany
     List<HomeWork> homeWork;
