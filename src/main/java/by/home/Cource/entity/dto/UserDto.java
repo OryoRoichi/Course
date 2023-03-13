@@ -1,7 +1,11 @@
 package by.home.Cource.entity.dto;
 
+import by.home.Cource.entity.enm.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -11,5 +15,10 @@ import lombok.experimental.FieldDefaults;
 public class UserDto {
 
     String name;
+    String login;
+
+    String password;
+    @JsonIgnore
+    List<Role> roles;
 
 }

@@ -1,0 +1,4 @@
+project:
+  security:
+    secret-key: the_very_secret_key
+    token-lifetime-hours: 1
