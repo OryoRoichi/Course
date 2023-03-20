@@ -1,6 +1,8 @@
 spring:
+  config:
+    import: classpath:project.yml
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=cource
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=course
     username: postgres
     password: root
   jpa:

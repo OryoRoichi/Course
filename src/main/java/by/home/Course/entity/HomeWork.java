@@ -17,8 +17,7 @@ public class HomeWork {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @OneToOne
-    @JoinColumn(name = "user_student_id")
-    User userStudent;
+    @JoinColumn(name = "student_id")
+    Long studentId;
     String content;
 }

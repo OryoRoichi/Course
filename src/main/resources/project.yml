@@ -1,4 +1,4 @@
 project:
   security:
-    secret-key: the_very_secret_key
+    secret-key: there_are_seven_deadly_sins_lust_envy_wrath_sloth_gluttony_greed_pride
     token-lifetime-hours: 1
