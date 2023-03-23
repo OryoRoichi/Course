@@ -20,4 +20,7 @@ public class HomeWork {
     @JoinColumn(name = "student_id")
     Long studentId;
     String content;
+    String review;
+
+    Integer resultMark;
 }

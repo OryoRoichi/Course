@@ -1,8 +1,7 @@
 package by.home.Course.web;
 
-import by.home.Course.entity.Course;
 import by.home.Course.entity.dto.CourseDto;
-import by.home.Course.entity.dto.HomeWorkViewDto;
+import by.home.Course.entity.dto.HomeWorkReviewDto;
 import by.home.Course.service.CourseService;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.AccessLevel;
@@ -23,9 +22,5 @@ public class CourseController {
     public ResponseEntity<CourseDto> createCource(@RequestBody CourseDto request){
         return ResponseEntity.ok(courseService.createCource(request));
     }
-    @RolesAllowed("ROLE_MENTOR")
-    @PostMapping("/check")
-    public ResponseEntity<HomeWorkViewDto> homeWorkCheck(@RequestParam Long lessonId, @RequestParam Long courseId){
-        return ResponseEntity.ok(courseService.checkHomeWork(lessonId,courseId));
-    }
+
 }

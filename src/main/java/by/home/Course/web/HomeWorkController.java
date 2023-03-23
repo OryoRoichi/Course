@@ -2,7 +2,9 @@ package by.home.Course.web;
 
 import by.home.Course.entity.HomeWork;
 import by.home.Course.entity.dto.HomeWorkDto;
+import by.home.Course.entity.dto.HomeWorkReviewDto;
 import by.home.Course.entity.dto.LessonDto;
+import by.home.Course.entity.dto.UncheckedHomeworkDto;
 import by.home.Course.service.HomeWorkService;
 import by.home.Course.service.LessonService;
 import jakarta.annotation.security.RolesAllowed;
@@ -27,6 +29,22 @@ public class HomeWorkController {
         return ResponseEntity.ok(homeWorkService.createHomeWork(lessonId,request));
     }
 
+    @RolesAllowed("ROLE_STUDENT")
+    @GetMapping("/view_homework")
+    public ResponseEntity<HomeWorkReviewDto> viewStudentsHomeWork(@RequestParam Long lessonId){
+        return ResponseEntity.ok(homeWorkService.viewStudentsHomeWork(lessonId));
+    }
 
+    @RolesAllowed("ROLE_MENTOR")
+    @GetMapping("/view_unchecked")
+    public ResponseEntity<UncheckedHomeworkDto> viewUncheckedHomeWork(@RequestParam Long lessonId){
+        return ResponseEntity.ok(homeWorkService.viewUncheckedHomeWork(lessonId));
+    }
+
+    @RolesAllowed("ROLE_MENTOR")
+    @PostMapping("/check")
+    public ResponseEntity<String> giveGrade(@RequestBody HomeWorkReviewDto request){
+        return ResponseEntity.ok(homeWorkService.giveGradeToHomeWork(request));
+    }
 
 }

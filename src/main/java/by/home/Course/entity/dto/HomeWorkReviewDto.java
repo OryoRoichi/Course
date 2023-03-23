@@ -8,8 +8,12 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level =  AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class HomeWorkDto {
-    Long id;
+public class HomeWorkReviewDto {
+
+    Long homeWorkId;
     String content;
+    String review;
+
+    Integer result;
 
 }
