@@ -24,12 +24,6 @@ public class HomeWorkController {
     HomeWorkService homeWorkService;
 
     @RolesAllowed("ROLE_STUDENT")
-    @PostMapping("/create")
-    public ResponseEntity<HomeWorkDto> createHomeWork(@RequestParam Long lessonId,@RequestBody HomeWorkDto request){
-        return ResponseEntity.ok(homeWorkService.createHomeWork(lessonId,request));
-    }
-
-    @RolesAllowed("ROLE_STUDENT")
     @GetMapping("/view_homework")
     public ResponseEntity<HomeWorkReviewDto> viewStudentsHomeWork(@RequestParam Long lessonId){
         return ResponseEntity.ok(homeWorkService.viewStudentsHomeWork(lessonId));
@@ -39,12 +33,6 @@ public class HomeWorkController {
     @GetMapping("/view_unchecked")
     public ResponseEntity<UncheckedHomeworkDto> viewUncheckedHomeWork(@RequestParam Long lessonId){
         return ResponseEntity.ok(homeWorkService.viewUncheckedHomeWork(lessonId));
-    }
-
-    @RolesAllowed("ROLE_MENTOR")
-    @PostMapping("/check")
-    public ResponseEntity<String> giveGrade(@RequestBody HomeWorkReviewDto request){
-        return ResponseEntity.ok(homeWorkService.giveGradeToHomeWork(request));
     }
 
 }

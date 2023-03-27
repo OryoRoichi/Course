@@ -16,17 +16,4 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class LessonController{
     LessonService lessonService;
-
-    @RolesAllowed("ROLE_MENTOR")
-    @PostMapping("/create")
-    public ResponseEntity<LessonDto> createLesson(@RequestParam Long courseId, @RequestBody LessonDto request){
-        return ResponseEntity.ok(lessonService.addLesson(courseId,request));
-    }
-
-//    @RolesAllowed("ROLE_MENTOR")
-//    @PostMapping("/check")
-//    public ResponseEntity<HomeWorkReviewDto> homeWorkCheck(@RequestParam Long lessonId){
-//        return ResponseEntity.ok(lessonService.checkHomeWork(lessonId));
-//    }
-
 }

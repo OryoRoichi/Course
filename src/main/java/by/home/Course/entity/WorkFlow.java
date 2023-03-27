@@ -16,9 +16,6 @@ import lombok.experimental.FieldDefaults;
 public class WorkFlow {
     @Id
     Long id;
-
     WorkFlowState state;
-
-
 
 }

@@ -23,17 +23,20 @@ public class LessonService {
     LessonRepository lessonRepository;
     CourseRepository courseRepository;
     LessonMapper lessonMapper;
-
-
-    public LessonDto addLesson(Long courseId, LessonDto request) {
+    private Lesson lessonToSaveMaker(Long courseId, LessonDto request){
         Lesson lessonToSave = lessonMapper.toEntity(request);
         lessonRepository.save(lessonToSave);
         courseRepository.findById(courseId)
                 .map(course -> course.getLesson().add(lessonToSave))
                 .orElseThrow(() -> new CourseNotFoundException(courseId));
-        return lessonMapper.ToDto(lessonToSave);
-
+        return lessonToSave;
     }
+
+
+    public LessonDto addLesson(Long courseId, LessonDto request) {
+        return lessonMapper.ToDto(lessonToSaveMaker(courseId,request));
+    }
+
 
 
 

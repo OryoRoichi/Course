@@ -63,7 +63,7 @@ public class HomeWorkService {
     }
 
 
-    public String giveGradeToHomeWork(HomeWorkReviewDto request) {
+    public String giveReview(HomeWorkReviewDto request) {
         HomeWork homeWork = homeWorkRepository.findById(request.getHomeWorkId())
                 .orElseThrow(() -> new HomeWorkNotFoundException(request.getHomeWorkId()));
         homeWork.setResultMark(request.getResult());
