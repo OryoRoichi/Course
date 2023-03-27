@@ -3,6 +3,7 @@ package by.home.Course.web;
 import by.home.Course.entity.dto.HomeWorkDto;
 import by.home.Course.entity.dto.HomeWorkReviewDto;
 import by.home.Course.entity.dto.LessonDto;
+import by.home.Course.service.LessonService;
 import by.home.Course.service.WorkFlowService;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.AccessLevel;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/workflow")
 public class WorkFlowController {
     WorkFlowService workFlowService;
+
+    LessonService lessonService;
 
     @RolesAllowed("ROLE_MENTOR")
     @RequestMapping("/lesson")

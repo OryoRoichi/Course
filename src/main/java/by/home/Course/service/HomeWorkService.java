@@ -58,7 +58,6 @@ public class HomeWorkService {
                 resultList.add(homeWorkMapper.ToDto(homework));
             }
         }
-        ;
         return UncheckedHomeworkDto.builder().homeWorkDtoList(resultList).build();
     }
 

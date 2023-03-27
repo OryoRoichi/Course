@@ -40,14 +40,6 @@ public class WorkFlowService {
                 .build());
     }
 
-    public Function<StateRequestDto, LessonDto> createLesson() {
-        return stageRequest -> {
-            LessonDto dto = lessonService.addLesson(stageRequest.getCourseId(), stageRequest.getRequest());
-            saveWorkFlow(WorkFlowState.LESSON);
-            return dto;
-        };
-    }
-
     public HomeWorkDto createHomeWork(Long lessonId, HomeWorkDto request) {
         HomeWorkDto dto = homeWorkService.createHomeWork(lessonId, request);
         saveWorkFlow(WorkFlowState.HOMEWORK);
