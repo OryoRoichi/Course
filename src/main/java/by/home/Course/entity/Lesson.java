@@ -23,6 +23,10 @@ public class Lesson {
 
     String name;
     String description;
-    @OneToMany
+    @OneToMany(mappedBy = "lesson")
     List<HomeWork> homeWork;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    Course course;
 }

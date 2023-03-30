@@ -21,6 +21,8 @@ public class HomeWork {
     Long studentId;
     String content;
     String review;
-
     Integer resultMark;
+    @ManyToOne
+    @JoinColumn(name = "lesson_id")
+    Lesson lesson;
 }

@@ -20,6 +20,11 @@ public class Course {
     Long id;
     String name;
     String description;
-    @OneToMany
+
+    @OneToMany(mappedBy = "course")
     List<Lesson> lesson;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 }

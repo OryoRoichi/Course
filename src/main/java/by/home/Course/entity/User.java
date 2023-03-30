@@ -28,7 +28,7 @@ public class User implements UserDetails {
     String password;
 
     String name;
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     List<Course> course;
     List<Role> role;
     @OneToMany(mappedBy = "orgUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

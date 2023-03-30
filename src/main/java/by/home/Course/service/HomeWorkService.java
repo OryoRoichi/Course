@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,16 +50,9 @@ public class HomeWorkService {
     }
 
     public UncheckedHomeworkDto viewUncheckedHomeWork(Long lessonId) {
-        List<HomeWorkDto> resultList = new ArrayList<>();
-        Lesson lessonToSet = lessonRepository
-                .findById(lessonId).orElseThrow(() -> new LessonNotFoundException(lessonId));
-        List<HomeWork> homeWorkList = lessonToSet.getHomeWork();
-        for (HomeWork homework : homeWorkList) {
-            if (homework.getResultMark() != null) {
-                resultList.add(homeWorkMapper.ToDto(homework));
-            }
-        }
-        ;
+        List<HomeWork> homeWorkList = homeWorkRepository.findByLesson(lessonId);
+        List<HomeWorkDto> resultList = homeWorkList.stream().filter((homeWork)->homeWork!=null)
+                .map(homeWork -> homeWorkMapper.ToDto(homeWork)).collect(Collectors.toList());
         return UncheckedHomeworkDto.builder().homeWorkDtoList(resultList).build();
     }
 
