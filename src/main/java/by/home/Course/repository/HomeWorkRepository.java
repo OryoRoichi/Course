@@ -10,7 +10,9 @@ import java.util.List;
 @Repository
 public interface HomeWorkRepository extends JpaRepository<HomeWork,Long>  {
 
+
     @Query(value = "select * form home_work where lesson_id = :lesson", nativeQuery = true)
     List<HomeWork> findByLesson(final Long lesson);
+
 
 }
