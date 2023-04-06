@@ -37,14 +37,14 @@ public class AuthorizationController {
     @PostMapping("/regStudent")
     public ResponseEntity<UserDto> studentRegistration(@RequestBody UserDto userDto) {
         userDto.setPassword(encoder.encode(userDto.getPassword()));
-        userDto.setRoles(List.of(Role.ROlE_STUDENT));
+        userDto.setRoles(List.of(Role.ROLE_STUDENT));
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto));
     }
 
     @PostMapping("/regMentor")
     public ResponseEntity<UserDto> mentorRegistration(@RequestBody UserDto userDto) {
         userDto.setPassword(encoder.encode(userDto.getPassword()));
-        userDto.setRoles(List.of(Role.ROlE_MENTOR));
+        userDto.setRoles(List.of(Role.ROLE_MENTOR));
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto));
     }
 

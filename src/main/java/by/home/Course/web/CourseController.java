@@ -33,7 +33,4 @@ public class CourseController {
     public ResponseEntity<CourseDto> viewCourse(@RequestParam Long courseId){
         return ResponseEntity.ok(courseService.viewCourse(courseId));
     }
-
-
-
 }

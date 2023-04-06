@@ -32,6 +32,7 @@ public class UserService implements UserDetailsService {
     }
     public UserDto createUser(UserDto userDto) {
         User userToSave = userMapper.toEntity(userDto);
+
         userToSave.setAuthorities(userDto
                 .getRoles()
                 .stream()
@@ -40,6 +41,7 @@ public class UserService implements UserDetailsService {
                         .orgUser(userToSave)
                         .build())
                 .collect(Collectors.toList()));
+
         UserDto resultDto = userMapper.toDto(saveUser(userToSave));
         return resultDto;
     }

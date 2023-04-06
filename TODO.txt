@@ -1,0 +1,49 @@
+http://localhost:8080/auth/regStudent
+{
+    "name":"Alehandro",
+    "login":"Student1",
+    "password":"password"
+}
+http://localhost:8080/auth/login
+{
+    "login":"Student1",
+    "password":"password"
+}
+http://localhost:8080/auth/regMentor
+{
+    "name" : "alex",
+    "login" : "Mentor1",
+    "password" : "password"
+}
+http://localhost:8080/auth/login
+{
+    "login":"Mentor1",
+    "password":"password"
+}
+http://localhost:8080/course/create
+{
+    "name" : "Course1",
+    "description" : "myfirstcourse"
+}
+
+TODO:
+1 Курс
+    1 создание курса
+    2 удаление курса
+    3 просмотр курса
+    4 добавление людей на курс
+2 Урок
+    1 Crud операции с уроком
+3 Домашнее задание
+
+Вопросы:
+Как лучше сделать удаление курса ?
+Добавление людей на курс делается с помощью реферальной сcылки ?
+ можно ли ее сжать в нейкий токен ?
+ State machine и как ее реализовать
+ почему не сетаются роли к юзеру?
+
+
+
+
+
