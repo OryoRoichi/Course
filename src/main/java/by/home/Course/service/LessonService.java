@@ -37,7 +37,7 @@ public class LessonService {
         return lessonToSave;
     }
 
-    public Function<StateRequestDto, LessonDto> createLesson() {
+    public Function<StateRequestDto<LessonDto>, LessonDto> createLesson() {
         return stageRequest -> {
             return addLesson(stageRequest.getCourseId(), stageRequest.getRequest());
         };

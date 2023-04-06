@@ -18,25 +18,25 @@ public class StateMachine {
     Stage currentStage;
 
     @Transactional
-    public LessonDto moveProcess(StateRequestDto stateRequest) {
+    public <T, P> T moveProcess(StateRequestDto<P> stateRequest) {
         if (currentStage == null) {
             currentStage = stage;
         }
-        if (stateRequest.getCurrentStage() != currentStage.getId()) {
+/*        if (stateRequest.getCurrentStage() != currentStage.getId()) {
             throw new RuntimeException("Этап изменился. Обновите страницу");
-        }
+        }*/
         switch (currentStage.getId()) {
             case START:
                 // DO start stuff
                 currentStage = currentStage.getNext();
             case LESSON:
-                return currentStage.getProcess()
+                return (T) currentStage.getProcess()
                         .andThen(lessonDto -> {
                             this.currentStage = currentStage.getNext();
                             return lessonDto;
                         }).apply(stateRequest);
             default:
-                return LessonDto.builder().build();
+                return (T) LessonDto.builder().build();
         }
     }
 

@@ -33,11 +33,8 @@ public class WorkFlowService {
     }
 
     public LessonDto createLesson(Long courseId, LessonDto request) {
-        return stateMachine.moveProcess(StateRequestDto
-                .builder()
-                .courseId(courseId)
-                .request(request)
-                .build());
+        StateRequestDto<LessonDto> requestDto = new StateRequestDto<>(courseId, request);
+        return stateMachine.moveProcess(requestDto);
     }
 
     public HomeWorkDto createHomeWork(Long lessonId, HomeWorkDto request) {

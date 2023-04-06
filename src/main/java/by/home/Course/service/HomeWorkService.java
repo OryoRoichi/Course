@@ -4,6 +4,7 @@ import by.home.Course.entity.HomeWork;
 import by.home.Course.entity.Lesson;
 import by.home.Course.entity.dto.HomeWorkDto;
 import by.home.Course.entity.dto.HomeWorkReviewDto;
+import by.home.Course.entity.dto.StateRequestDto;
 import by.home.Course.entity.dto.UncheckedHomeworkDto;
 import by.home.Course.entity.mapper.HomeWorkMapper;
 import by.home.Course.exceptions.CourseNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +48,10 @@ public class HomeWorkService {
 
         homeWorkRepository.save(homeWorkToSave);
         return homeWorkMapper.ToDto(homeWorkToSave);
+    }
+
+    public Function<StateRequestDto<HomeWorkDto>, HomeWorkDto> createHomeWork() {
+        return stateRequest -> createHomeWork(1L, stateRequest.getRequest()); // TODO: cделать одну DTO содержащую lessonId и HomeWorkDto
     }
 
     public UncheckedHomeworkDto viewUncheckedHomeWork(Long lessonId) {
