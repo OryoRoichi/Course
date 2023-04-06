@@ -16,7 +16,6 @@ public class UserDto {
 
     String name;
     String login;
-
     String password;
     @JsonIgnore
     List<Role> roles;

@@ -22,5 +22,18 @@ public class CourseController {
     public ResponseEntity<CourseDto> createCource(@RequestBody CourseDto request){
         return ResponseEntity.ok(courseService.createCource(request));
     }
+    @RolesAllowed("ROLE_MENTOR")
+    @PostMapping("/add")
+    public ResponseEntity<String> addStudent(@RequestParam Long studentId, @RequestBody CourseDto request){
+        return ResponseEntity.ok(courseService.addStudent(studentId,request));
+    }
+
+    @RolesAllowed({"ROLE_MENTOR", "ROLE_STUDENT"})
+    @PostMapping("/view")
+    public ResponseEntity<CourseDto> viewCourse(@RequestParam Long courseId){
+        return ResponseEntity.ok(courseService.viewCourse(courseId));
+    }
+
+
 
 }
