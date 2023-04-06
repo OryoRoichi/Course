@@ -11,5 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class HomeWorkDto {
     Long id;
     String content;
+    String review;
+    Integer result;
 
 }

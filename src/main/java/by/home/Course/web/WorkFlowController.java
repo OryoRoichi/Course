@@ -37,7 +37,7 @@ public class WorkFlowController {
     }
     @RolesAllowed("ROLE_MENTOR")
     @PostMapping("/review")
-    public ResponseEntity<String> giveReview(@RequestBody HomeWorkReviewDto request){
+    public ResponseEntity<HomeWorkDto> giveReview(@RequestBody HomeWorkDto request){
         return ResponseEntity.ok(workFlowService.setReview(request));
     }
 

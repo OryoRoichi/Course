@@ -4,7 +4,7 @@ import by.home.Course.entity.WorkFlow;
 import by.home.Course.entity.dto.HomeWorkDto;
 import by.home.Course.entity.dto.HomeWorkReviewDto;
 import by.home.Course.entity.dto.LessonDto;
-import by.home.Course.entity.dto.StateRequestDto;
+import by.home.Course.entity.dto.stateRequests.LessinStateRequestDto;
 import by.home.Course.entity.enums.WorkFlowState;
 import by.home.Course.repository.WorkFlowRepository;
 import by.home.Course.service.statemachine.StateMachine;
@@ -12,10 +12,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +29,7 @@ public class WorkFlowService {
     }
 
     public LessonDto createLesson(Long courseId, LessonDto request) {
-        return stateMachine.moveProcess(StateRequestDto
+        return stateMachine.moveProcess(LessinStateRequestDto
                 .builder()
                 .courseId(courseId)
                 .request(request)
@@ -46,9 +42,9 @@ public class WorkFlowService {
         return dto;
     }
 
-    public String setReview(HomeWorkReviewDto request) {
-        String stringToReturn = homeWorkService.giveReview(request);
+    public HomeWorkDto setReview(HomeWorkDto request) {
+        HomeWorkDto dtoToReturn = homeWorkService.giveReview(request);
         saveWorkFlow(WorkFlowState.HOMEWORK_REVIEW);
-        return stringToReturn;
+        return dtoToReturn;
     }
 }

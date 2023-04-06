@@ -1,29 +1,24 @@
 package by.home.Course.service;
 
-import by.home.Course.entity.HomeWork;
 import by.home.Course.entity.Lesson;
-import by.home.Course.entity.dto.HomeWorkReviewDto;
 import by.home.Course.entity.dto.LessonDto;
-import by.home.Course.entity.dto.StateRequestDto;
-import by.home.Course.entity.enums.WorkFlowState;
+import by.home.Course.entity.dto.stateRequests.AbstractStateRequestDto;
+import by.home.Course.entity.dto.stateRequests.LessinStateRequestDto;
 import by.home.Course.entity.mapper.LessonMapper;
 import by.home.Course.exceptions.CourseNotFoundException;
-import by.home.Course.exceptions.LessonNotFoundException;
 import by.home.Course.repository.CourseRepository;
 import by.home.Course.repository.LessonRepository;
-import by.home.Course.service.statemachine.StateMachine;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class LessonService {
+public class LessonService<I extends LessinStateRequestDto> {
     LessonRepository lessonRepository;
     CourseRepository courseRepository;
     LessonMapper lessonMapper;
@@ -37,7 +32,7 @@ public class LessonService {
         return lessonToSave;
     }
 
-    public Function<StateRequestDto, LessonDto> createLesson() {
+    public Function<I , LessonDto> createLesson() {
         return stageRequest -> {
             return addLesson(stageRequest.getCourseId(), stageRequest.getRequest());
         };
