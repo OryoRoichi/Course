@@ -1,5 +1,8 @@
 package by.home.Course.config;
 
+import by.home.Course.entity.dto.HomeWorkDto;
+import by.home.Course.entity.dto.stateRequests.HomeWorkStateRequestDto;
+import by.home.Course.entity.dto.stateRequests.StateRequestDto;
 import by.home.Course.entity.enums.WorkFlowState;
 import by.home.Course.service.HomeWorkService;
 import by.home.Course.service.LessonService;
@@ -18,8 +21,12 @@ public class StateMachineConfig {
     @Bean
     public Stage stage() {
         Stage end = Stage.builder().id(WorkFlowState.END).build();
-        Stage review = Stage.builder().id(WorkFlowState.HOMEWORK_REVIEW).next(end).process(homeWorkService.createReview()).build();
-        Stage homework = Stage.builder().id(WorkFlowState.HOMEWORK).next(review).process(homeWorkService.createHomeWork()).build();
+        Stage<HomeWorkDto, HomeWorkDto> review = Stage.<HomeWorkDto, HomeWorkDto>builder().id(WorkFlowState.HOMEWORK_REVIEW).next(end)
+                .process(homeWorkService.createReview())
+                .build();
+        Stage<HomeWorkDto, HomeWorkDto> homework = Stage.<HomeWorkDto, HomeWorkDto>builder().id(WorkFlowState.HOMEWORK).next(review)
+                .process(homeWorkService.createHomeWork())
+                .build();
         Stage lesson = Stage.builder().id(WorkFlowState.LESSON).next(homework).process(lessonService.createLesson()).build();
         Stage start = Stage.builder().id(WorkFlowState.START).next(lesson).build();
         return start;

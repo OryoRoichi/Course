@@ -2,7 +2,6 @@ package by.home.Course.service;
 
 import by.home.Course.entity.Lesson;
 import by.home.Course.entity.dto.LessonDto;
-import by.home.Course.entity.dto.stateRequests.AbstractStateRequestDto;
 import by.home.Course.entity.dto.stateRequests.LessinStateRequestDto;
 import by.home.Course.entity.mapper.LessonMapper;
 import by.home.Course.exceptions.CourseNotFoundException;

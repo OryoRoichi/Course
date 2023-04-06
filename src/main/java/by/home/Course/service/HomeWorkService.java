@@ -3,7 +3,7 @@ package by.home.Course.service;
 import by.home.Course.entity.HomeWork;
 import by.home.Course.entity.Lesson;
 import by.home.Course.entity.dto.*;
-import by.home.Course.entity.dto.stateRequests.HomeWorkStateRequestDto;
+import by.home.Course.entity.dto.stateRequests.StateRequestDto;
 import by.home.Course.entity.mapper.HomeWorkMapper;
 import by.home.Course.exceptions.HomeWorkNotFoundException;
 import by.home.Course.exceptions.LessonNotFoundException;
@@ -13,6 +13,7 @@ import by.home.Course.security.SecurityUtil;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.stereotype.Service;
 
@@ -23,24 +24,20 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class HomeWorkService<I extends HomeWorkStateRequestDto> {
+public class HomeWorkService {
 
     HomeWorkRepository homeWorkRepository;
     HomeWorkMapper homeWorkMapper;
     LessonRepository lessonRepository;
 
-    public Function<I , HomeWorkDto> createHomeWork() {
-        return stageRequest -> {
-            return createHomeWork( stageRequest.getLessonId(), stageRequest.getRequest());
-        };
+    public Function<StateRequestDto<HomeWorkDto>, HomeWorkDto> createHomeWork() {
+        return stageRequest -> createHomeWork(stageRequest.getRequest());
     }
-    public Function<I ,HomeWorkDto> createReview(){
-        return  stageRequest -> {
-            return giveReview(stageRequest.getRequest());
-        };
+    public Function<StateRequestDto<HomeWorkDto>, HomeWorkDto> createReview(){
+        return  stageRequest -> giveReview(stageRequest.getRequest());
     }
 
-    public HomeWorkDto createHomeWork(Long lessonId, HomeWorkDto request) {
+    public HomeWorkDto createHomeWork(HomeWorkDto request) {
         HomeWork homeWorkToSave = homeWorkMapper.toEntity(request);
         Long studentId = SecurityUtil
                 .getCurrentUser()
@@ -49,9 +46,9 @@ public class HomeWorkService<I extends HomeWorkStateRequestDto> {
 
         homeWorkToSave.setStudentId(studentId);
 
-        lessonRepository.findById(lessonId)
+        lessonRepository.findById(request.getLessonId())
                 .map(lesson -> lesson.getHomeWork().add(homeWorkToSave))
-                .orElseThrow(() -> new LessonNotFoundException(lessonId));
+                .orElseThrow(() -> new LessonNotFoundException(request.getLessonId()));
 
         homeWorkRepository.save(homeWorkToSave);
         return homeWorkMapper.ToDto(homeWorkToSave);
@@ -59,7 +56,7 @@ public class HomeWorkService<I extends HomeWorkStateRequestDto> {
 
     public UncheckedHomeworkDto viewUncheckedHomeWork(Long lessonId) {
         List<HomeWork> homeWorkList = homeWorkRepository.findByLesson(lessonId);
-        List<HomeWorkDto> resultList = homeWorkList.stream().filter((homeWork)->homeWork!=null)
+        List<HomeWorkDto> resultList = homeWorkList.stream().filter(homeWork-> ObjectUtils.isNotEmpty(homeWork))
                 .map(homeWork -> homeWorkMapper.ToDto(homeWork)).collect(Collectors.toList());
         return UncheckedHomeworkDto.builder().homeWorkDtoList(resultList).build();
     }

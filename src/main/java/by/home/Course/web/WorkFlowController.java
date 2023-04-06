@@ -32,8 +32,8 @@ public class WorkFlowController {
     }
     @RolesAllowed("ROLE_STUDENT")
     @RequestMapping("/homework")
-    public ResponseEntity<HomeWorkDto> createHomeWork(@RequestParam Long lessonId, @RequestBody HomeWorkDto request){
-        return ResponseEntity.ok(workFlowService.createHomeWork(lessonId,request));
+    public ResponseEntity<HomeWorkDto> createHomeWork(@RequestBody HomeWorkDto request){
+        return ResponseEntity.ok(workFlowService.createHomeWork(request));
     }
     @RolesAllowed("ROLE_MENTOR")
     @PostMapping("/review")

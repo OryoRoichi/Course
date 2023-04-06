@@ -1,8 +1,6 @@
 package by.home.Course.service.statemachine;
 
-import by.home.Course.entity.dto.HomeWorkDto;
-import by.home.Course.entity.dto.LessonDto;
-import by.home.Course.entity.dto.stateRequests.AbstractStateRequestDto;
+import by.home.Course.entity.dto.stateRequests.StateRequestDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,7 +17,7 @@ public class StateMachine {
     Stage currentStage;
 
     @Transactional
-    public <I extends AbstractStateRequestDto, O> O moveProcess(I stateRequest) {
+    public <I extends StateRequestDto, O> O moveProcess(I stateRequest) {
         if (currentStage == null) {
             currentStage = stage;
         }
@@ -30,20 +28,15 @@ public class StateMachine {
             case START:
                 // DO start stuff
                 currentStage = currentStage.getNext();
+                // return smth;
             case LESSON:
+            case HOMEWORK:
+            case HOMEWORK_REVIEW:
                 return (O) currentStage.getProcess()
                         .andThen(lessonDto -> {
                             this.currentStage = currentStage.getNext();
                             return lessonDto;
                         }).apply(stateRequest);
-            case HOMEWORK:
-            case HOMEWORK_REVIEW:
-                return (O) currentStage.getProcess()
-                        .andThen(homeWorkDto -> {
-                            this.currentStage = currentStage.getNext();
-                            return homeWorkDto;
-                        }).apply(stateRequest);
-
             case END:
                 // DO start stuff
             default:

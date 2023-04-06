@@ -5,6 +5,7 @@ import by.home.Course.entity.dto.HomeWorkDto;
 import by.home.Course.entity.dto.HomeWorkReviewDto;
 import by.home.Course.entity.dto.LessonDto;
 import by.home.Course.entity.dto.stateRequests.LessinStateRequestDto;
+import by.home.Course.entity.dto.stateRequests.StateRequestDto;
 import by.home.Course.entity.enums.WorkFlowState;
 import by.home.Course.repository.WorkFlowRepository;
 import by.home.Course.service.statemachine.StateMachine;
@@ -36,10 +37,12 @@ public class WorkFlowService {
                 .build());
     }
 
-    public HomeWorkDto createHomeWork(Long lessonId, HomeWorkDto request) {
-        HomeWorkDto dto = homeWorkService.createHomeWork(lessonId, request);
-        saveWorkFlow(WorkFlowState.HOMEWORK);
-        return dto;
+    public HomeWorkDto createHomeWork(HomeWorkDto request) {
+        return stateMachine.moveProcess(StateRequestDto
+                .builder()
+                .currentStage(WorkFlowState.HOMEWORK)
+                .request(request)
+                .build());
     }
 
     public HomeWorkDto setReview(HomeWorkDto request) {

@@ -5,11 +5,13 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.mapstruct.Builder;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @SuperBuilder
-public abstract class AbstractStateRequestDto {
+public class StateRequestDto<Body> {
     WorkFlowState currentStage;
+
+    Body request;
+
 }
