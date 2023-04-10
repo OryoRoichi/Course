@@ -27,8 +27,8 @@ public class WorkFlowController {
 
     @RolesAllowed("ROLE_MENTOR")
     @RequestMapping("/lesson")
-    public ResponseEntity<LessonDto> createLesson(@RequestParam Long courseId, @RequestBody LessonDto request) {
-        return ResponseEntity.ok(workFlowService.createLesson(courseId, request));
+    public ResponseEntity<LessonDto> createLesson(@RequestBody LessonDto request) {
+        return ResponseEntity.ok(workFlowService.createLesson( request));
     }
     @RolesAllowed("ROLE_STUDENT")
     @RequestMapping("/homework")

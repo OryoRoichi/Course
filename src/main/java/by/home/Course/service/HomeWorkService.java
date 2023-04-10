@@ -2,7 +2,9 @@ package by.home.Course.service;
 
 import by.home.Course.entity.HomeWork;
 import by.home.Course.entity.Lesson;
-import by.home.Course.entity.dto.*;
+import by.home.Course.entity.dto.HomeWorkDto;
+import by.home.Course.entity.dto.HomeWorkReviewDto;
+import by.home.Course.entity.dto.UncheckedHomeworkDto;
 import by.home.Course.entity.dto.stateRequests.StateRequestDto;
 import by.home.Course.entity.mapper.HomeWorkMapper;
 import by.home.Course.exceptions.HomeWorkNotFoundException;
@@ -54,6 +56,7 @@ public class HomeWorkService {
         return homeWorkMapper.ToDto(homeWorkToSave);
     }
 
+
     public UncheckedHomeworkDto viewUncheckedHomeWork(Long lessonId) {
         List<HomeWork> homeWorkList = homeWorkRepository.findByLesson(lessonId);
         List<HomeWorkDto> resultList = homeWorkList.stream().filter(homeWork-> ObjectUtils.isNotEmpty(homeWork))
@@ -84,6 +87,4 @@ public class HomeWorkService {
                 .result(homeWork.getResultMark())
                 .build();
     }
-
-
 }

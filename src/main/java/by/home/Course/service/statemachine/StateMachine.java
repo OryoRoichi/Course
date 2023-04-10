@@ -1,5 +1,6 @@
 package by.home.Course.service.statemachine;
 
+import by.home.Course.entity.dto.LessonDto;
 import by.home.Course.entity.dto.stateRequests.StateRequestDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,9 @@ public class StateMachine {
     Stage currentStage;
 
     @Transactional
-    public <I extends StateRequestDto, O> O moveProcess(I stateRequest) {
+    public <T, P> T moveProcess(StateRequestDto<P> stateRequest) {
         if (currentStage == null) {
             currentStage = stage;
-        }
-        if (stateRequest.getCurrentStage() != currentStage.getId()) {
-            throw new RuntimeException("Этап изменился. Обновите страницу");
         }
         switch (currentStage.getId()) {
             case START:
@@ -32,7 +30,7 @@ public class StateMachine {
             case LESSON:
             case HOMEWORK:
             case HOMEWORK_REVIEW:
-                return (O) currentStage.getProcess()
+                return (T) currentStage.getProcess()
                         .andThen(lessonDto -> {
                             this.currentStage = currentStage.getNext();
                             return lessonDto;
@@ -40,7 +38,9 @@ public class StateMachine {
             case END:
                 // DO start stuff
             default:
-                return null;
+
+                return (T) LessonDto.builder().build();
+
         }
     }
 
