@@ -15,15 +15,22 @@ import org.springframework.context.annotation.Configuration;
 public class StateMachineConfig {
 
     private final LessonService lessonService;
-
     private final HomeWorkService homeWorkService;
+
 
     @Bean
     public Stage stage() {
         Stage end = Stage.builder().id(WorkFlowState.END).build();
-        Stage review = Stage.builder().id(WorkFlowState.HOMEWORK_REVIEW).next(end).build();
-        Stage<HomeWorkDto, HomeWorkDto> homework = new Stage<>(WorkFlowState.HOMEWORK, review, homeWorkService.createHomeWork());
-        Stage<LessonDto, LessonDto> lesson = new Stage<>(WorkFlowState.LESSON, homework, lessonService.createLesson());
+
+        Stage<HomeWorkDto, HomeWorkDto> review = Stage.<HomeWorkDto, HomeWorkDto>builder().id(WorkFlowState.HOMEWORK_REVIEW).next(end)
+                .process(homeWorkService.createReview())
+                .build();
+        Stage<HomeWorkDto, HomeWorkDto> homework = Stage.<HomeWorkDto, HomeWorkDto>builder().id(WorkFlowState.HOMEWORK).next(review)
+                .process(homeWorkService.createHomeWork())
+                .build();
+        Stage<LessonDto, LessonDto> lesson = Stage.<LessonDto, LessonDto>builder().id(WorkFlowState.LESSON).next(homework)
+                .process(lessonService.createLesson())
+                .build();
         Stage start = Stage.builder().id(WorkFlowState.START).next(lesson).build();
         return start;
     }

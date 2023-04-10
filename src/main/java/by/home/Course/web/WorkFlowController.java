@@ -27,17 +27,17 @@ public class WorkFlowController {
 
     @RolesAllowed("ROLE_MENTOR")
     @RequestMapping("/lesson")
-    public ResponseEntity<LessonDto> createLesson(@RequestParam Long courseId, @RequestBody LessonDto request) {
-        return ResponseEntity.ok(workFlowService.createLesson(courseId, request));
+    public ResponseEntity<LessonDto> createLesson(@RequestBody LessonDto request) {
+        return ResponseEntity.ok(workFlowService.createLesson( request));
     }
     @RolesAllowed("ROLE_STUDENT")
     @RequestMapping("/homework")
-    public ResponseEntity<HomeWorkDto> createHomeWork(@RequestParam Long lessonId, @RequestBody HomeWorkDto request){
-        return ResponseEntity.ok(workFlowService.createHomeWork(lessonId,request));
+    public ResponseEntity<HomeWorkDto> createHomeWork(@RequestBody HomeWorkDto request){
+        return ResponseEntity.ok(workFlowService.createHomeWork(request));
     }
     @RolesAllowed("ROLE_MENTOR")
     @PostMapping("/review")
-    public ResponseEntity<String> giveReview(@RequestBody HomeWorkReviewDto request){
+    public ResponseEntity<HomeWorkDto> giveReview(@RequestBody HomeWorkDto request){
         return ResponseEntity.ok(workFlowService.setReview(request));
     }
 

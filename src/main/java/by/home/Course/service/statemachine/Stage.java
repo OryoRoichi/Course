@@ -1,6 +1,7 @@
 package by.home.Course.service.statemachine;
 
-import by.home.Course.entity.dto.StateRequestDto;
+
+import by.home.Course.entity.dto.stateRequests.StateRequestDto;
 import by.home.Course.entity.enums.WorkFlowState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,8 @@ import java.util.function.Function;
 @Data
 @Builder
 @AllArgsConstructor
-public class Stage<T, P> {
+public class Stage <T, P>    {
+
 
     private WorkFlowState id;
 
