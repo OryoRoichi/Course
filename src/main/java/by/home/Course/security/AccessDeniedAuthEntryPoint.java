@@ -16,7 +16,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class AccessDeniedAuthEntryPoint implements AccessDeniedHandler {
-    ObjectMapper mapper;
+     private final ObjectMapper mapper;
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {

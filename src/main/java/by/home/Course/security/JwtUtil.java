@@ -34,8 +34,8 @@ public class JwtUtil {
                 .atZone(ZoneId.systemDefault())
                 .toInstant());
         return Jwts.builder()
-                .setSubject("Cource")
-                .setClaims(Map.of("userId", user.getId().toString()))
+                .setSubject("cource")
+                .addClaims(Map.of("userId", user.getId().toString()))
                 .setExpiration(expirationDate)
                 .setIssuedAt(new Date())
                 .signWith(key)
