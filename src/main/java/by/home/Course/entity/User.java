@@ -30,7 +30,7 @@ public class User implements UserDetails {
     String name;
     @OneToMany(mappedBy = "user")
     List<Course> course;
-    List<Role> role;
+
     @OneToMany(mappedBy = "orgUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<Authority> authorities;
 

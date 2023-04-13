@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LessonDto {
+    Long courseId;
     String name;
     String description;
 
