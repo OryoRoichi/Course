@@ -26,12 +26,12 @@ public class WorkFlowController {
     LessonService lessonService;
 
     @RolesAllowed("ROLE_MENTOR")
-    @RequestMapping("/lesson")
+    @PostMapping("/lesson")
     public ResponseEntity<LessonDto> createLesson(@RequestBody LessonDto request) {
         return ResponseEntity.ok(workFlowService.createLesson( request));
     }
     @RolesAllowed("ROLE_STUDENT")
-    @RequestMapping("/homework")
+    @PostMapping("/homework")
     public ResponseEntity<HomeWorkDto> createHomeWork(@RequestBody HomeWorkDto request){
         return ResponseEntity.ok(workFlowService.createHomeWork(request));
     }

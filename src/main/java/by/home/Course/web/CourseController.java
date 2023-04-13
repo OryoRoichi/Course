@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,13 +25,21 @@ public class CourseController {
     }
     @RolesAllowed("ROLE_MENTOR")
     @PostMapping("/add")
-    public ResponseEntity<String> addStudent(@RequestParam Long studentId, @RequestBody CourseDto request){
-        return ResponseEntity.ok(courseService.addStudent(studentId,request));
+    public ResponseEntity<String> addStudent(@RequestParam Long studentId, @RequestParam Long courseId){
+        return ResponseEntity.ok(courseService.addStudent(studentId,courseId));
     }
 
-    @RolesAllowed({"ROLE_MENTOR", "ROLE_STUDENT"})
-    @PostMapping("/view")
+   // @RolesAllowed({"ROLE_MENTOR", "ROLE_STUDENT"})
+    @PreAuthorize("hasAnyRole('ROLE_MENTOR','ROLE_STUDENT')")
+    @GetMapping("/view")
     public ResponseEntity<CourseDto> viewCourse(@RequestParam Long courseId){
         return ResponseEntity.ok(courseService.viewCourse(courseId));
     }
+
+    @RolesAllowed("ROLE_MENTOR")
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteCourse(@RequestParam Long courseId){
+        return ResponseEntity.ok(courseService.deleteCourse(courseId));
+    }
+
 }

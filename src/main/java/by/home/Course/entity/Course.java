@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Course {
+public class    Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -25,6 +25,11 @@ public class Course {
     List<Lesson> lesson;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_student_id")
     User user;
+
+    @OneToOne
+    @JoinColumn(name = "user_mentor_id")
+    User mentor;
+
 }

@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .authenticationEntryPoint(authEntryPoint)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**", "/test/**")
+                .requestMatchers("/auth/**", "/test/**","/swagger-ui/**", "/swagger-ui**", "/api-docs/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()

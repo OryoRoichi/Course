@@ -34,7 +34,7 @@ public class JwtUtil {
                 .atZone(ZoneId.systemDefault())
                 .toInstant());
         return Jwts.builder()
-                .setSubject("cource")
+                .setSubject("course")
                 .addClaims(Map.of("userId", user.getId().toString()))
                 .setExpiration(expirationDate)
                 .setIssuedAt(new Date())
@@ -45,7 +45,7 @@ public class JwtUtil {
     public Claims validateAndGet(final String token) {
         final SecretKey key = getSecretKey();
         return Jwts.parserBuilder()
-                .requireSubject("cource")
+                .requireSubject("course")
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)

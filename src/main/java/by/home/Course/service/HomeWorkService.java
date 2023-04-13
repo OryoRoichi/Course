@@ -45,13 +45,11 @@ public class HomeWorkService {
                 .getCurrentUser()
                 .orElseThrow(() -> new AuthenticationServiceException("Authorization Error"))
                 .getId();
-
         homeWorkToSave.setStudentId(studentId);
 
-        lessonRepository.findById(request.getLessonId())
-                .map(lesson -> lesson.getHomeWork().add(homeWorkToSave))
+        Lesson lessonToSet = lessonRepository.findById(request.getLessonId())
                 .orElseThrow(() -> new LessonNotFoundException(request.getLessonId()));
-
+        homeWorkToSave.setLesson(lessonToSet);
         homeWorkRepository.save(homeWorkToSave);
         return homeWorkMapper.ToDto(homeWorkToSave);
     }

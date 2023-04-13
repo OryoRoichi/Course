@@ -38,10 +38,7 @@ public class StateMachine {
             case END:
                 // DO start stuff
             default:
-
                 return (T) LessonDto.builder().build();
-
         }
     }
-
 }

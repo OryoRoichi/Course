@@ -22,9 +22,8 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
 
     UserRepository userRepository;
+
     UserMapper userMapper;
-
-
 
     private User saveUser(User userToSave) {
         User user = userRepository.save(userToSave);

@@ -1,5 +1,6 @@
 package by.home.Course.service;
 
+import by.home.Course.entity.Course;
 import by.home.Course.entity.Lesson;
 import by.home.Course.entity.dto.LessonDto;
 import by.home.Course.entity.dto.stateRequests.StateRequestDto;
@@ -22,12 +23,12 @@ public class LessonService {
     CourseRepository courseRepository;
     LessonMapper lessonMapper;
 
-    private Lesson lessonToSaveMaker(Long courseId, LessonDto request){
+    private Lesson lessonToSaveMaker(Long courseId, LessonDto request) {
         Lesson lessonToSave = lessonMapper.toEntity(request);
-        lessonRepository.save(lessonToSave);
-        courseRepository.findById(courseId)
-                .map(course -> course.getLesson().add(lessonToSave))
+        Course courseToSet = courseRepository.findById(courseId)
                 .orElseThrow(() -> new CourseNotFoundException(courseId));
+        lessonToSave.setCourse(courseToSet);
+        lessonRepository.save(lessonToSave);
         return lessonToSave;
     }
 
